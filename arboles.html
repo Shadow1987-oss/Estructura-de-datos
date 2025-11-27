@@ -362,6 +362,7 @@ function insert(root: TreeNode | null, value: number) {
 			iterator = values;
 			iteratorIndex = -1;
 			updateIteratorInfo();
+			updateVisual();
 			addLog('🔄 Iterador iniciado (recorrido In-Order)');
 		}
 
@@ -376,6 +377,7 @@ function insert(root: TreeNode | null, value: number) {
 			}
 			iteratorIndex++;
 			updateIteratorInfo();
+			updateVisual();
 			addLog(`➡️ Iterador: posición ${iteratorIndex}, valor ${iterator[iteratorIndex]}`);
 		}
 
@@ -390,6 +392,7 @@ function insert(root: TreeNode | null, value: number) {
 			}
 			iteratorIndex--;
 			updateIteratorInfo();
+			updateVisual();
 			if (iteratorIndex >= 0) {
 				addLog(`⬅️ Iterador: posición ${iteratorIndex}, valor ${iterator[iteratorIndex]}`);
 			} else {
@@ -404,6 +407,7 @@ function insert(root: TreeNode | null, value: number) {
 			}
 			iteratorIndex = -1;
 			updateIteratorInfo();
+			updateVisual();
 			addLog('🔄 Iterador reiniciado');
 		}
 
@@ -433,24 +437,61 @@ function insert(root: TreeNode | null, value: number) {
 			visual.innerHTML = renderTree(root);
 		}
 
-		function renderTree(node, level = 0) {
+		function renderTree(node) {
 			if (!node) return '';
 			
+			// Construir representación simple del árbol por niveles
+			const levels = getLevels(root);
 			let html = '';
-			if (level === 0) {
-				html = `<div class="tree-level"><div class="tree-node">${node.value}</div></div>`;
-			}
 			
-			if (node.left || node.right) {
+			levels.forEach((level, index) => {
 				html += '<div class="tree-level">';
-				if (node.left) html += `<div class="tree-node">${node.left.value}</div>`;
-				else html += '<div style="width:50px;"></div>';
-				if (node.right) html += `<div class="tree-node">${node.right.value}</div>`;
-				else html += '<div style="width:50px;"></div>';
+				level.forEach(nodeValue => {
+					if (nodeValue !== null) {
+						const isHighlighted = iterator && iterator[iteratorIndex] === nodeValue;
+						const highlightStyle = isHighlighted ? 'box-shadow: 0 0 0 4px #fbbf24; transform: scale(1.15);' : '';
+						html += `<div class="tree-node" style="${highlightStyle}">${nodeValue}</div>`;
+					} else {
+						html += '<div style="width:60px; height:60px;"></div>';
+					}
+				});
 				html += '</div>';
-			}
+			});
 			
 			return html;
+		}
+
+		function getLevels(root) {
+			if (!root) return [];
+			
+			const levels = [];
+			const queue = [root];
+			
+			while (queue.length > 0) {
+				const levelSize = queue.length;
+				const currentLevel = [];
+				let hasNodes = false;
+				
+				for (let i = 0; i < levelSize; i++) {
+					const node = queue.shift();
+					
+					if (node) {
+						currentLevel.push(node.value);
+						queue.push(node.left);
+						queue.push(node.right);
+						if (node.left || node.right) hasNodes = true;
+					} else {
+						currentLevel.push(null);
+						queue.push(null);
+						queue.push(null);
+					}
+				}
+				
+				levels.push(currentLevel);
+				if (!hasNodes) break;
+			}
+			
+			return levels;
 		}
 
 		function updateTraversal() {
