@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Glosario interactivo de programación - UTN">
+	<meta name="keywords" content="glosario, UTN, programación, conceptos">
+	<meta name="author" content="Acuña Ruiz Yoselyn">
+	<link rel="icon" href="imagenes/icono.ico" type="image/x-icon">
+	<link rel="stylesheet" href="estilos/glosario.css" type="text/css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+	<title>Clases Parametrizadas y Tipos Genéricos - Glosario UTN</title>
+</head>
+
+<body>
+	<header class="header">
+		<div class="div_img">
+			<img class="img" src="imagenes/utn_logo.png">
+			<div class="titulos">
+				<h3>UTN</h3>
+				<h5>ACUÑA RUIZ YOSELYN</h5>
+			</div>
+		</div>
+		<nav class="menu">
+			<ul>
+				<li><a href="glosario.html">Inicio</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<section class="carreras">
+		<h2>Clases Parametrizadas y Tipos Genéricos</h2>
+		<div class="linea"></div>
+
+		<p>
+			Las clases parametrizadas o tipos genéricos permiten <br>
+			definir clases y métodos que pueden trabajar con distintos tipos de datos sin <br>
+			necesidad de duplicar código. Son muy útiles para crear estructuras reutilizables.<br>
+		</p>
+
+		<h3>Ejemplo en Java:</h3>
+		<pre>
+			public class Caja<T> {
+				private T contenido;
+
+				public void guardar(T valor) {
+					contenido = valor;
+				}
+
+				public T obtener() {
+					return contenido;
+				}
+			}
+
+			<em style="font-weight: normal;">// Uso:</em>
+			Caja<String> c1 = new Caja<>();
+				c1.guardar("Hola");
+
+				Caja<Integer> c2 = new Caja<>();
+					c2.guardar(123);
+				</pre>
+				<img class="imgprin" src="imagenes/Gene.png">
+
+				<h3>Ventajas:</h3>
+				<ul>
+					<li>Evitan la repetición de código.</li>
+					<li>Permiten mayor flexibilidad y reutilización.</li>
+					<li>Mejoran la seguridad de tipos en tiempo de compilación.</li>
+				</ul>
+
+				<h3>Aplicaciones comunes:</h3>
+				<ul>
+					<li>Listas, colas, pilas y mapas genéricos.</li>
+					<li>Métodos genéricos para procesar datos de distintos tipos.</li>
+				</ul>
+				<a class="btn btn--principal" href="glosario.html">← Volver al Glosario</a>
+			</section>
+			<footer class="footer">
+				<div class="footer_grid">
+					<div class="footer_brand">
+						<div class="logo">
+							<img src="imagenes/utn_logo.png">
+						</div>
+						<div class="brand-text">
+							<strong>UTN</strong>
+							<div>Universidad Tecnológica de Nayarit</div>
+						</div>
+						<div class="follow">Síguenos</div>
+						<div class="social">
+							<a href="https://www.facebook.com/UTNAY?locale=es_LA"><img src="imagenes/fblogo.png"></a>
+							<a href="https://www.instagram.com/ut.nayarit/"><img src="imagenes/iglogo.png"></a>
+						</div>
+					</div>
+
+					<div class="footer_col">
+						<h4 id="contacto">Contacto</h4>
+						<ul class="icons">
+							<li><span class="ico">📞</span> +52 (311) 211 9800</li>
+							<li><span class="ico">✉️</span> info@utnay.edu.mx</li>
+						</ul>
+					</div>
+				</div>
+			</footer>
+
+		</body>
+		</html>

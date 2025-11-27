@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Glosario interactivo de programación - UTN">
+	<meta name="keywords" content="glosario, UTN, programación, árboles binarios, BST, AVL">
+	<meta name="author" content="Acuña Ruiz Yoselyn">
+	<link rel="icon" href="imagenes/icono.ico" type="image/x-icon">
+	<link rel="stylesheet" href="estilos/glosario.css" type="text/css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+	<title>Árboles Binarios - Glosario UTN</title>
+	<style>
+		.demo-container {
+			margin: 40px 0;
+			padding: 35px;
+			background: rgba(255, 255, 255, 0.9);
+			backdrop-filter: blur(10px);
+			border-radius: 24px;
+			border: 2px solid rgba(45, 102, 36, 0.2);
+			box-shadow: 0 15px 50px rgba(45, 102, 36, 0.15);
+		}
+		.tree-visual {
+			margin: 20px auto;
+			min-height: 250px;
+			max-width: 900px;
+			padding: 30px;
+			background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+			border: 3px dashed rgba(45, 102, 36, 0.3);
+			border-radius: 20px;
+			box-shadow: inset 0 2px 10px rgba(45, 102, 36, 0.1);
+			text-align: center;
+			position: relative;
+		}
+		.tree-node {
+			display: inline-block;
+			background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 50%, #6d28d9 100%);
+			color: white;
+			padding: 12px 18px;
+			border-radius: 50%;
+			border: 2px solid rgba(255, 255, 255, 0.2);
+			font-weight: bold;
+			margin: 5px;
+			box-shadow: 0 8px 20px rgba(139, 92, 246, 0.4);
+			animation: fadeIn 0.3s ease;
+			position: relative;
+		}
+		@keyframes fadeIn {
+			from { opacity: 0; transform: scale(0); }
+			to { opacity: 1; transform: scale(1); }
+		}
+		.controls {
+			display: flex;
+			gap: 10px;
+			justify-content: center;
+			margin: 20px 0;
+			flex-wrap: wrap;
+		}
+		.btn-demo {
+			padding: 12px 28px;
+			background: linear-gradient(135deg, #2d6624, #4a9c3d);
+			color: white;
+			border: none;
+			border-radius: 10px;
+			cursor: pointer;
+			font-weight: 700;
+			font-size: 15px;
+			box-shadow: 0 6px 20px rgba(45, 102, 36, 0.3);
+			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+		.btn-demo:hover {
+			background: linear-gradient(135deg, #4a9c3d, #2d6624);
+			transform: translateY(-2px);
+			box-shadow: 0 10px 30px rgba(45, 102, 36, 0.4);
+		}
+		.btn-demo:active {
+			transform: translateY(0);
+		}
+		input.demo-input {
+			padding: 12px 16px;
+			border: 2px solid rgba(45, 102, 36, 0.3);
+			border-radius: 10px;
+			width: 120px;
+			font-size: 15px;
+			transition: all 0.3s ease;
+			background: white;
+		}
+		input.demo-input:focus {
+			outline: none;
+			border-color: #2d6624;
+			box-shadow: 0 0 0 3px rgba(45, 102, 36, 0.1);
+		}
+		.log {
+			margin-top: 25px;
+			padding: 20px;
+			background: rgba(255, 255, 255, 0.8);
+			backdrop-filter: blur(10px);
+			border-radius: 12px;
+			max-height: 180px;
+			overflow-y: auto;
+			border: 1px solid rgba(45, 102, 36, 0.2);
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+		}
+		.log-entry {
+			padding: 5px;
+			border-bottom: 1px solid #eee;
+			font-size: 14px;
+		}
+		.tree-level {
+			margin: 15px 0;
+			display: flex;
+			justify-content: center;
+			gap: 40px;
+		}
+	</style>
+</head>
+
+<body>
+	<header class="header">
+		<div class="div_img">
+			<img class="img" src="imagenes/utn_logo.png">
+			<div class="titulos">
+				<h3>UTN</h3>
+				<h5>ACUÑA RUIZ YOSELYN</h5>
+			</div>
+		</div>
+		<nav class="menu">
+			<ul>
+				<li><a href="glosario.html">Inicio</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<section class="carreras">
+		<h2>Árboles Binarios (Binary Trees)</h2>
+		<div class="linea"></div>
+
+		<p>
+			Un árbol binario es una estructura jerárquica donde cada nodo<br>
+			tiene como máximo dos hijos: izquierdo y derecho.<br>
+			Permite búsquedas, inserciones y eliminaciones eficientes en O(log n).<br>
+		</p>
+
+		<h3>Demostración Interactiva (BST)</h3>
+		<div class="demo-container">
+			<div class="controls">
+				<input type="number" id="treeInput" class="demo-input" placeholder="Valor">
+				<button class="btn-demo" onclick="insert()">Insertar</button>
+				<button class="btn-demo" onclick="search()">Buscar</button>
+				<button class="btn-demo" onclick="clear()">Limpiar</button>
+			</div>
+			<div class="tree-visual" id="treeVisual">
+				<span style="color: #999;">Árbol vacío - Inserta valores numéricos</span>
+			</div>
+			<div id="traversal" style="padding: 10px; background: white; margin: 10px 0; border-radius: 5px; font-weight: bold; color: #2d6624;"></div>
+			
+			<!-- Controles del Iterador -->
+			<div style="margin: 20px 0; padding: 20px; background: rgba(139, 92, 246, 0.1); border-radius: 12px; border: 2px solid rgba(139, 92, 246, 0.3);">
+				<h4 style="color: #7c3aed; margin-bottom: 10px; font-size: 16px;">🔄 Iterador In-Order (Recorrido ordenado)</h4>
+				<div class="controls" style="margin-bottom: 10px;">
+					<button class="btn-demo" onclick="startIterator()" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">Iniciar Iterador</button>
+					<button class="btn-demo" onclick="iterPrev()" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">⬅️ Anterior</button>
+					<button class="btn-demo" onclick="iterNext()" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">Siguiente ➡️</button>
+					<button class="btn-demo" onclick="iterReset()" style="background: linear-gradient(135deg, #8b5cf6, #7c3aed);">🔄 Reset</button>
+				</div>
+				<div id="iteratorInfo" style="color: #7c3aed; font-size: 14px; font-weight: bold;">
+					Iterador no iniciado - Presiona "Iniciar Iterador"
+				</div>
+				<div style="color: #7c3aed; font-size: 12px; margin-top: 8px; opacity: 0.8;">
+					El iterador recorre el árbol en orden (In-Order: izq → raíz → der), mostrando los valores ordenados ascendentemente.
+				</div>
+			</div>
+			
+			<div class="log" id="treeLog"></div>
+		</div>
+
+		<h3>Tipos de Árboles Binarios</h3>
+		<ul>
+			<li><strong>BST (Binary Search Tree):</strong> Izquierda < Raíz < Derecha</li>
+			<li><strong>AVL Tree:</strong> BST auto-balanceado con rotaciones</li>
+			<li><strong>Complete Binary Tree:</strong> Todos los niveles llenos excepto el último</li>
+			<li><strong>Full Binary Tree:</strong> Cada nodo tiene 0 o 2 hijos</li>
+			<li><strong>Perfect Binary Tree:</strong> Todos los niveles completamente llenos</li>
+		</ul>
+
+		<h3>Características del BST</h3>
+		<ul>
+			<li><strong>Insert O(log n):</strong> En árbol balanceado, O(n) en peor caso</li>
+			<li><strong>Search O(log n):</strong> Divide el espacio de búsqueda a la mitad</li>
+			<li><strong>Delete O(log n):</strong> Requiere reorganización de nodos</li>
+			<li><strong>Propiedad BST:</strong> Todos los valores a la izquierda son menores, a la derecha mayores</li>
+		</ul>
+
+		<h3>Recorridos (Traversals)</h3>
+		<ul>
+			<li><strong>In-Order (izq → raíz → der):</strong> Visita nodos en orden ascendente</li>
+			<li><strong>Pre-Order (raíz → izq → der):</strong> Útil para copiar el árbol</li>
+			<li><strong>Post-Order (izq → der → raíz):</strong> Útil para eliminar el árbol</li>
+			<li><strong>Level-Order (por niveles):</strong> Usa una cola, visita nivel por nivel</li>
+		</ul>
+
+		<h3>Ejemplo en código (Nodo)</h3>
+		<pre>
+// TypeScript
+class TreeNode&lt;T&gt; {
+  value: T;
+  left: TreeNode&lt;T&gt; | null = null;
+  right: TreeNode&lt;T&gt; | null = null;
+  
+  constructor(value: T) {
+    this.value = value;
+  }
+}
+
+// Insertar en BST
+function insert(root: TreeNode | null, value: number) {
+  if (!root) return new TreeNode(value);
+  
+  if (value < root.value) {
+    root.left = insert(root.left, value);
+  } else if (value > root.value) {
+    root.right = insert(root.right, value);
+  }
+  return root;
+}
+		</pre>
+
+		<h3>Aplicaciones Reales</h3>
+		<ul>
+			<li>Bases de datos (índices B-Tree)</li>
+			<li>Sistemas de archivos (jerarquías de directorios)</li>
+			<li>Compiladores (árboles de sintaxis abstracta)</li>
+			<li>Expresiones matemáticas (árboles de expresión)</li>
+			<li>Prioridades (heaps - árboles binarios completos)</li>
+			<li>Autocompletado y diccionarios (Tries)</li>
+		</ul>
+
+		<a class="btn btn--principal" href="glosario.html">← Volver al Glosario</a>
+	</section>
+
+	<footer class="footer">
+		<div class="footer_grid">
+			<div class="footer_brand">
+				<div class="logo">
+					<img src="imagenes/utn_logo.png">
+				</div>
+				<div class="brand-text">
+					<strong>UTN</strong>
+					<div>Universidad Tecnológica de Nayarit</div>
+				</div>
+				<div class="follow">Síguenos</div>
+				<div class="social">
+					<a href="https://www.facebook.com/UTNAY?locale=es_LA"><img src="imagenes/fblogo.png"></a>
+					<a href="https://www.instagram.com/ut.nayarit/"><img src="imagenes/iglogo.png"></a>
+				</div>
+			</div>
+
+			<div class="footer_col">
+				<h4 id="contacto">Contacto</h4>
+				<ul class="icons">
+					<li><span class="ico">📞</span> +52 (311) 211 9800</li>
+					<li><span class="ico">✉️</span> info@utnay.edu.mx</li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+
+	<script>
+		class Node {
+			constructor(value) {
+				this.value = value;
+				this.left = null;
+				this.right = null;
+			}
+		}
+
+		let root = null;
+		let iterator = null;
+		let iteratorIndex = -1;
+
+		function insert() {
+			const input = document.getElementById('treeInput');
+			const value = parseInt(input.value);
+			if (isNaN(value)) return;
+			
+			root = insertNode(root, value);
+			input.value = '';
+			updateVisual();
+			updateTraversal();
+			addLog(`✅ Insertado ${value} en el árbol BST`);
+			
+			if (iterator) {
+				iterator = null;
+				iteratorIndex = -1;
+				updateIteratorInfo();
+			}
+		}
+
+		function insertNode(node, value) {
+			if (!node) return new Node(value);
+			
+			if (value < node.value) {
+				node.left = insertNode(node.left, value);
+			} else if (value > node.value) {
+				node.right = insertNode(node.right, value);
+			} else {
+				addLog(`⚠️ ${value} ya existe en el árbol`);
+			}
+			return node;
+		}
+
+		function search() {
+			const input = document.getElementById('treeInput');
+			const value = parseInt(input.value);
+			if (isNaN(value)) return;
+			
+			const found = searchNode(root, value);
+			if (found) {
+				addLog(`✅ ${value} encontrado en el árbol`);
+			} else {
+				addLog(`❌ ${value} no encontrado en el árbol`);
+			}
+		}
+
+		function searchNode(node, value) {
+			if (!node) return false;
+			if (value === node.value) return true;
+			if (value < node.value) return searchNode(node.left, value);
+			return searchNode(node.right, value);
+		}
+
+		function clear() {
+			root = null;
+			updateVisual();
+			document.getElementById('traversal').innerHTML = '';
+			addLog('🗑️ Árbol limpiado');
+			
+			if (iterator) {
+				iterator = null;
+				iteratorIndex = -1;
+				updateIteratorInfo();
+			}
+		}
+
+		function inOrder(node, result = []) {
+			if (!node) return result;
+			inOrder(node.left, result);
+			result.push(node.value);
+			inOrder(node.right, result);
+			return result;
+		}
+
+		// --- ITERADOR ---
+		function startIterator() {
+			const values = inOrder(root);
+			if (values.length === 0) {
+				addLog('⚠️ No se puede iniciar iterador: árbol vacío');
+				return;
+			}
+			iterator = values;
+			iteratorIndex = -1;
+			updateIteratorInfo();
+			addLog('🔄 Iterador iniciado (recorrido In-Order)');
+		}
+
+		function iterNext() {
+			if (!iterator) {
+				addLog('⚠️ Inicia el iterador primero');
+				return;
+			}
+			if (iteratorIndex >= iterator.length - 1) {
+				addLog('⚠️ Iterador al final');
+				return;
+			}
+			iteratorIndex++;
+			updateIteratorInfo();
+			addLog(`➡️ Iterador: posición ${iteratorIndex}, valor ${iterator[iteratorIndex]}`);
+		}
+
+		function iterPrev() {
+			if (!iterator) {
+				addLog('⚠️ Inicia el iterador primero');
+				return;
+			}
+			if (iteratorIndex < 0) {
+				addLog('⚠️ Iterador al inicio');
+				return;
+			}
+			iteratorIndex--;
+			updateIteratorInfo();
+			if (iteratorIndex >= 0) {
+				addLog(`⬅️ Iterador: posición ${iteratorIndex}, valor ${iterator[iteratorIndex]}`);
+			} else {
+				addLog(`⬅️ Iterador: posición inicial`);
+			}
+		}
+
+		function iterReset() {
+			if (!iterator) {
+				addLog('⚠️ Inicia el iterador primero');
+				return;
+			}
+			iteratorIndex = -1;
+			updateIteratorInfo();
+			addLog('🔄 Iterador reiniciado');
+		}
+
+		function updateIteratorInfo() {
+			const info = document.getElementById('iteratorInfo');
+			if (!iterator) {
+				info.innerHTML = 'Iterador no iniciado - Presiona "Iniciar Iterador"';
+				return;
+			}
+			
+			if (iteratorIndex < 0) {
+				info.innerHTML = `📍 Posición: Inicio | Total: ${iterator.length} nodos (In-Order)`;
+			} else {
+				const value = iterator[iteratorIndex];
+				info.innerHTML = `📍 Posición: ${iteratorIndex} | Valor: ${value} | Secuencia: [${iterator.join(', ')}]`;
+			}
+		}
+		// --- FIN ITERADOR ---
+
+		function updateVisual() {
+			const visual = document.getElementById('treeVisual');
+			if (!root) {
+				visual.innerHTML = '<span style="color: #999;">Árbol vacío - Inserta valores numéricos</span>';
+				return;
+			}
+			
+			visual.innerHTML = renderTree(root);
+		}
+
+		function renderTree(node, level = 0) {
+			if (!node) return '';
+			
+			let html = '';
+			if (level === 0) {
+				html = `<div class="tree-level"><div class="tree-node">${node.value}</div></div>`;
+			}
+			
+			if (node.left || node.right) {
+				html += '<div class="tree-level">';
+				if (node.left) html += `<div class="tree-node">${node.left.value}</div>`;
+				else html += '<div style="width:50px;"></div>';
+				if (node.right) html += `<div class="tree-node">${node.right.value}</div>`;
+				else html += '<div style="width:50px;"></div>';
+				html += '</div>';
+			}
+			
+			return html;
+		}
+
+		function updateTraversal() {
+			const values = inOrder(root);
+			document.getElementById('traversal').innerHTML = 
+				`In-Order Traversal: ${values.join(' → ')}`;
+		}
+
+		function addLog(message) {
+			const log = document.getElementById('treeLog');
+			const entry = document.createElement('div');
+			entry.className = 'log-entry';
+			entry.textContent = message;
+			log.insertBefore(entry, log.firstChild);
+		}
+	</script>
+</body>
+</html>

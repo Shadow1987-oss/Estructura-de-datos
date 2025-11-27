@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Glosario interactivo de programación - UTN">
+	<meta name="keywords" content="glosario, UTN, programación, conceptos">
+	<meta name="author" content="Acuña Ruiz Yoselyn">
+	<link rel="icon" href="imagenes/icono.ico" type="image/x-icon">
+	<link rel="stylesheet" href="estilos/glosario.css" type="text/css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+	<title>Glosario Interactivo - UTN</title>
+</head>
+
+<body>
+	<header class="header">
+		<div class="div_img">
+			<img class="img" src="imagenes/utn_logo.png">
+			<div class="titulos">
+				<h3>UTN</h3>
+				<h5>ACUÑA RUIZ YOSELYN</h5>
+			</div>
+		</div>
+		<nav class="menu">
+			<ul>
+				<li><a href="#inicio">Inicio</a></li>
+				<li><a href="#glosario">Glosario</a></li>
+				<li><a href="#contacto">Contacto</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<section id="inicio" class="inicio">
+		<div class="inicio_col inicio_col--left">
+			<h1 class="inicio_titulo">Glosario Interactivo<br>de Estructuras de datos<br> Unidad I</h1>
+			<p>Explora los conceptos fundamentales de la programación de manera visual e intuitiva.</p>
+			<a class="btn btn--principal" href="#glosario">Ver Glosario →</a>
+		</div>
+		<div class="inicio_col inicio_col--der">
+			<div class="marco">
+				<img src="imagenes/programacion.png" alt="Imagen de programación">
+			</div>
+		</div>
+	</section>
+
+
+	<section id="glosario" class="carreras">
+		<h2>Glosario de Estructuras de Datos</h2>
+		<div class="linea"></div>
+
+		<div class="contenedor">
+			<a href="arreglos.html" class="tarjeta">
+				<h3>Arreglos (Arrays)</h3>
+				<p class="definicion">Memoria contigua con acceso O(1) por índice. Base de muchas estructuras.</p>
+				<img src="imagenes/Arreglo.png">
+			</a>
+
+			<a href="pilas.html" class="tarjeta">
+				<h3>Pilas (Stacks)</h3>
+				<p class="definicion">LIFO: Último en entrar, primero en salir. Usado en deshacer/rehacer.</p>
+				<img src="imagenes/TDA.png">
+			</a>
+
+			<a href="colas.html" class="tarjeta">
+				<h3>Colas (Queues)</h3>
+				<p class="definicion">FIFO: Primero en entrar, primero en salir. Usado en sistemas de espera.</p>
+				<img src="imagenes/TDA.png">
+			</a>
+
+			<a href="listas.html" class="tarjeta">
+				<h3>Listas Enlazadas</h3>
+				<p class="definicion">Nodos conectados por enlaces. Singly, Doubly y Circular.</p>
+				<img src="imagenes/TDA.png">
+			</a>
+
+			<a href="arboles.html" class="tarjeta">
+				<h3>Árboles Binarios</h3>
+				<p class="definicion">Estructura jerárquica. BST, AVL y árboles completos.</p>
+				<img src="imagenes/TDA.png">
+			</a>
+
+			<a href="recursividad.html" class="tarjeta">
+				<h3>Recursividad</h3>
+				<p class="definicion">Técnica donde una función se llama a sí misma para resolver problemas.</p>
+				<img src="imagenes/Recursividad.png">
+			</a>
+		</div>
+	</section>
+	<footer class="footer">
+		<div class="footer_grid">
+			<div class="footer_brand">
+				<div class="logo">
+					<img src="imagenes/utn_logo.png">
+				</div>
+				<div class="brand-text">
+					<strong>UTN</strong>
+					<div>Universidad Tecnológica de Nayarit</div>
+				</div>
+				<div class="follow">Síguenos</div>
+				<div class="social">
+					<a href="https://www.facebook.com/UTNAY?locale=es_LA"><img src="imagenes/fblogo.png"></a>
+					<a href="https://www.instagram.com/ut.nayarit/"><img src="imagenes/iglogo.png"></a>
+				</div>
+			</div>
+
+			<div class="footer_col">
+				<h4 id="contacto">Contacto</h4>
+				<ul class="icons">
+					<li><span class="ico">📞</span> +52 (311) 211 9800</li>
+					<li><span class="ico">✉️</span> info@utnay.edu.mx</li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>

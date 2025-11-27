@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="Glosario interactivo de programación - UTN">
+	<meta name="keywords" content="glosario, UTN, programación, listas enlazadas, linked list">
+	<meta name="author" content="Acuña Ruiz Yoselyn">
+	<link rel="icon" href="imagenes/icono.ico" type="image/x-icon">
+	<link rel="stylesheet" href="estilos/glosario.css" type="text/css">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+	<title>Listas Enlazadas - Glosario UTN</title>
+	<style>
+		.demo-container {
+			margin: 40px 0;
+			padding: 35px;
+			background: rgba(255, 255, 255, 0.9);
+			backdrop-filter: blur(10px);
+			border-radius: 24px;
+			border: 2px solid rgba(45, 102, 36, 0.2);
+			box-shadow: 0 15px 50px rgba(45, 102, 36, 0.15);
+		}
+		.list-visual {
+			display: flex;
+			gap: 5px;
+			margin: 20px auto;
+			min-height: 100px;
+			max-width: 900px;
+			padding: 30px;
+			background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+			border: 3px dashed rgba(45, 102, 36, 0.3);
+			border-radius: 20px;
+			box-shadow: inset 0 2px 10px rgba(45, 102, 36, 0.1);
+			align-items: center;
+			overflow-x: auto;
+			flex-wrap: wrap;
+		}
+		.list-node {
+			display: flex;
+			align-items: center;
+			gap: 5px;
+		}
+		.node-box {
+			background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #ea580c 100%);
+			color: white;
+			padding: 15px 20px;
+			border-radius: 12px;
+			border: 2px solid rgba(255, 255, 255, 0.2);
+			font-weight: bold;
+			box-shadow: 0 8px 20px rgba(245, 158, 11, 0.4);
+			animation: fadeIn 0.3s ease;
+		}
+		.node-arrow {
+			font-size: 24px;
+			color: #2d6624;
+		}
+		@keyframes fadeIn {
+			from { opacity: 0; transform: scale(0.8); }
+			to { opacity: 1; transform: scale(1); }
+		}
+		.controls {
+			display: flex;
+			gap: 10px;
+			justify-content: center;
+			margin: 20px 0;
+			flex-wrap: wrap;
+		}
+		.btn-demo {
+			padding: 12px 28px;
+			background: linear-gradient(135deg, #2d6624, #4a9c3d);
+			color: white;
+			border: none;
+			border-radius: 10px;
+			cursor: pointer;
+			font-weight: 700;
+			font-size: 15px;
+			box-shadow: 0 6px 20px rgba(45, 102, 36, 0.3);
+			transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+		.btn-demo:hover {
+			background: linear-gradient(135deg, #4a9c3d, #2d6624);
+			transform: translateY(-2px);
+			box-shadow: 0 10px 30px rgba(45, 102, 36, 0.4);
+		}
+		.btn-demo:active {
+			transform: translateY(0);
+		}
+		input.demo-input {
+			padding: 12px 16px;
+			border: 2px solid rgba(45, 102, 36, 0.3);
+			border-radius: 10px;
+			width: 150px;
+			font-size: 15px;
+			transition: all 0.3s ease;
+			background: white;
+		}
+		input.demo-input:focus {
+			outline: none;
+			border-color: #2d6624;
+			box-shadow: 0 0 0 3px rgba(45, 102, 36, 0.1);
+		}
+		.log {
+			margin-top: 25px;
+			padding: 20px;
+			background: rgba(255, 255, 255, 0.8);
+			backdrop-filter: blur(10px);
+			border-radius: 12px;
+			max-height: 180px;
+			overflow-y: auto;
+			border: 1px solid rgba(45, 102, 36, 0.2);
+			box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+		}
+		.log-entry {
+			padding: 5px;
+			border-bottom: 1px solid #eee;
+			font-size: 14px;
+		}
+	</style>
+</head>
+
+<body>
+	<header class="header">
+		<div class="div_img">
+			<img class="img" src="imagenes/utn_logo.png">
+			<div class="titulos">
+				<h3>UTN</h3>
+				<h5>ACUÑA RUIZ YOSELYN</h5>
+			</div>
+		</div>
+		<nav class="menu">
+			<ul>
+				<li><a href="glosario.html">Inicio</a></li>
+			</ul>
+		</nav>
+	</header>
+
+	<section class="carreras">
+		<h2>Listas Enlazadas (Linked Lists)</h2>
+		<div class="linea"></div>
+
+		<p>
+			Una lista enlazada es una estructura donde cada elemento (nodo)<br>
+			contiene un valor y un enlace (puntero) al siguiente nodo.<br>
+			Permite inserciones y eliminaciones eficientes sin mover elementos.<br>
+		</p>
+
+		<h3>Demostración Interactiva</h3>
+		<div class="demo-container">
+			<div class="controls">
+				<input type="text" id="listInput" class="demo-input" placeholder="Ingresa un valor">
+				<button class="btn-demo" onclick="insertHead()">Insertar al Inicio</button>
+				<button class="btn-demo" onclick="insertTail()">Insertar al Final</button>
+				<button class="btn-demo" onclick="removeHead()">Eliminar Inicio</button>
+				<button class="btn-demo" onclick="removeTail()">Eliminar Final</button>
+			</div>
+			<div class="list-visual" id="listVisual">
+				<span style="color: #999;">Lista vacía - Inserta elementos</span>
+			</div>
+			
+			<!-- Controles del Iterador -->
+			<div style="margin: 20px 0; padding: 20px; background: rgba(245, 158, 11, 0.1); border-radius: 12px; border: 2px solid rgba(245, 158, 11, 0.3);">
+				<h4 style="color: #d97706; margin-bottom: 10px; font-size: 16px;">🔄 Iterador (Recorrer nodos)</h4>
+				<div class="controls" style="margin-bottom: 10px;">
+					<button class="btn-demo" onclick="startIterator()" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">Iniciar Iterador</button>
+					<button class="btn-demo" onclick="iterPrev()" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">⬅️ Anterior</button>
+					<button class="btn-demo" onclick="iterNext()" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">Siguiente ➡️</button>
+					<button class="btn-demo" onclick="iterReset()" style="background: linear-gradient(135deg, #fbbf24, #f59e0b);">🔄 Reset</button>
+				</div>
+				<div id="iteratorInfo" style="color: #d97706; font-size: 14px; font-weight: bold;">
+					Iterador no iniciado - Presiona "Iniciar Iterador"
+				</div>
+				<div style="color: #d97706; font-size: 12px; margin-top: 8px; opacity: 0.8;">
+					El iterador te permite recorrer los nodos de la lista desde el head hasta el final.
+				</div>
+			</div>
+			
+			<div class="log" id="listLog"></div>
+		</div>
+
+		<h3>Tipos de Listas Enlazadas</h3>
+		<ul>
+			<li><strong>Singly Linked List:</strong> Cada nodo apunta solo al siguiente (→)</li>
+			<li><strong>Doubly Linked List:</strong> Cada nodo apunta al siguiente y al anterior (← →)</li>
+			<li><strong>Circular Linked List:</strong> El último nodo apunta al primero (forma un círculo)</li>
+		</ul>
+
+		<h3>Características</h3>
+		<ul>
+			<li><strong>Insert Head O(1):</strong> Insertar al inicio es muy rápido</li>
+			<li><strong>Insert Tail O(n) o O(1):</strong> Depende si se guarda tail pointer</li>
+			<li><strong>Remove Head O(1):</strong> Remover del inicio es muy rápido</li>
+			<li><strong>Search O(n):</strong> Debe recorrer la lista secuencialmente</li>
+			<li><strong>Memoria dinámica:</strong> Crece y decrece según necesidad</li>
+		</ul>
+
+		<h3>Ejemplo en código (Nodo)</h3>
+		<pre>
+// TypeScript - Nodo simple
+class Node&lt;T&gt; {
+  value: T;
+  next: Node&lt;T&gt; | null;
+  
+  constructor(value: T) {
+    this.value = value;
+    this.next = null;
+  }
+}
+
+// Insertar al inicio
+function insertHead(value: T) {
+  const newNode = new Node(value);
+  newNode.next = head;
+  head = newNode;
+}
+		</pre>
+
+		<h3>Ventajas</h3>
+		<ul>
+			<li>Tamaño dinámico (no requiere tamaño predefinido)</li>
+			<li>Inserciones/eliminaciones O(1) si tienes el nodo</li>
+			<li>No desperdicia memoria</li>
+		</ul>
+
+		<h3>Desventajas</h3>
+		<ul>
+			<li>No hay acceso directo por índice (debe recorrer)</li>
+			<li>Usa memoria extra para los punteros</li>
+			<li>No es cache-friendly (nodos dispersos en memoria)</li>
+		</ul>
+
+		<h3>Aplicaciones Reales</h3>
+		<ul>
+			<li>Implementación de pilas y colas</li>
+			<li>Listas de reproducción (música, video)</li>
+			<li>Historial del navegador (anterior/siguiente)</li>
+			<li>Editor de texto (deshacer/rehacer múltiples niveles)</li>
+			<li>Manejo de memoria (free list)</li>
+		</ul>
+
+		<a class="btn btn--principal" href="glosario.html">← Volver al Glosario</a>
+	</section>
+
+	<footer class="footer">
+		<div class="footer_grid">
+			<div class="footer_brand">
+				<div class="logo">
+					<img src="imagenes/utn_logo.png">
+				</div>
+				<div class="brand-text">
+					<strong>UTN</strong>
+					<div>Universidad Tecnológica de Nayarit</div>
+				</div>
+				<div class="follow">Síguenos</div>
+				<div class="social">
+					<a href="https://www.facebook.com/UTNAY?locale=es_LA"><img src="imagenes/fblogo.png"></a>
+					<a href="https://www.instagram.com/ut.nayarit/"><img src="imagenes/iglogo.png"></a>
+				</div>
+			</div>
+
+			<div class="footer_col">
+				<h4 id="contacto">Contacto</h4>
+				<ul class="icons">
+					<li><span class="ico">📞</span> +52 (311) 211 9800</li>
+					<li><span class="ico">✉️</span> info@utnay.edu.mx</li>
+				</ul>
+			</div>
+		</div>
+	</footer>
+
+	<script>
+		let list = [];
+		let iterator = null;
+		let iteratorIndex = -1;
+
+		function insertHead() {
+			const input = document.getElementById('listInput');
+			const value = input.value.trim();
+			if (!value) return;
+			
+			list.unshift(value);
+			input.value = '';
+			updateVisual();
+			addLog(`✅ Insertado "${value}" al inicio (head)`);
+			
+			if (iterator) {
+				iterator = null;
+				iteratorIndex = -1;
+				updateIteratorInfo();
+			}
+		}
+
+		function insertTail() {
+			const input = document.getElementById('listInput');
+			const value = input.value.trim();
+			if (!value) return;
+			
+			list.push(value);
+			input.value = '';
+			updateVisual();
+			addLog(`✅ Insertado "${value}" al final (tail)`);
+			
+			if (iterator) {
+				iterator = null;
+				iteratorIndex = -1;
+				updateIteratorInfo();
+			}
+		}
+
+		function removeHead() {
+			if (list.length === 0) {
+				addLog('❌ Lista vacía');
+				return;
+			}
+			const value = list.shift();
+			updateVisual();
+			addLog(`✅ Removido "${value}" del inicio`);
+			
+			if (iterator) {
+				iterator = null;
+				iteratorIndex = -1;
+				updateIteratorInfo();
+			}
+		}
+
+		function removeTail() {
+			if (list.length === 0) {
+				addLog('❌ Lista vacía');
+				return;
+			}
+			const value = list.pop();
+			updateVisual();
+			addLog(`✅ Removido "${value}" del final`);
+			
+			if (iterator) {
+				iterator = null;
+				iteratorIndex = -1;
+				updateIteratorInfo();
+			}
+		}
+
+		// --- ITERADOR ---
+		function startIterator() {
+			if (list.length === 0) {
+				addLog('⚠️ No se puede iniciar iterador: lista vacía');
+				return;
+			}
+			iterator = [...list];
+			iteratorIndex = -1;
+			updateIteratorInfo();
+			updateVisual();
+			addLog('🔄 Iterador iniciado (snapshot tomada)');
+		}
+
+		function iterNext() {
+			if (!iterator) {
+				addLog('⚠️ Inicia el iterador primero');
+				return;
+			}
+			if (iteratorIndex >= iterator.length - 1) {
+				addLog('⚠️ Iterador al final');
+				return;
+			}
+			iteratorIndex++;
+			updateIteratorInfo();
+			updateVisual();
+			addLog(`➡️ Iterador: nodo ${iteratorIndex}, valor "${iterator[iteratorIndex]}"`);
+		}
+
+		function iterPrev() {
+			if (!iterator) {
+				addLog('⚠️ Inicia el iterador primero');
+				return;
+			}
+			if (iteratorIndex < 0) {
+				addLog('⚠️ Iterador al inicio');
+				return;
+			}
+			iteratorIndex--;
+			updateIteratorInfo();
+			updateVisual();
+			if (iteratorIndex >= 0) {
+				addLog(`⬅️ Iterador: nodo ${iteratorIndex}, valor "${iterator[iteratorIndex]}"`);
+			} else {
+				addLog(`⬅️ Iterador: posición inicial`);
+			}
+		}
+
+		function iterReset() {
+			if (!iterator) {
+				addLog('⚠️ Inicia el iterador primero');
+				return;
+			}
+			iteratorIndex = -1;
+			updateIteratorInfo();
+			updateVisual();
+			addLog('🔄 Iterador reiniciado');
+		}
+
+		function updateIteratorInfo() {
+			const info = document.getElementById('iteratorInfo');
+			if (!iterator) {
+				info.innerHTML = 'Iterador no iniciado - Presiona "Iniciar Iterador"';
+				return;
+			}
+			
+			if (iteratorIndex < 0) {
+				info.innerHTML = `📍 Posición: Antes del head | Total: ${iterator.length} nodos`;
+			} else {
+				const value = iterator[iteratorIndex];
+				const isHead = iteratorIndex === 0;
+				const isTail = iteratorIndex === iterator.length - 1;
+				info.innerHTML = `📍 Nodo: ${iteratorIndex} | Valor: "${value}" ${isHead ? '[HEAD]' : ''} ${isTail ? '[TAIL]' : ''}`;
+			}
+		}
+		// --- FIN ITERADOR ---
+
+
+		function updateVisual() {
+			const visual = document.getElementById('listVisual');
+			if (list.length === 0) {
+				visual.innerHTML = '<span style="color: #999;">Lista vacía (head → null)</span>';
+			} else {
+				const nodes = list.map((item, idx) => {
+					const isHighlighted = iterator && iteratorIndex === idx;
+					const highlightStyle = isHighlighted ? 'box-shadow: 0 0 0 4px #fbbf24; transform: scale(1.1);' : '';
+					return `<div class="list-node">
+						<div class="node-box" style="${highlightStyle}">${item}</div>
+						${idx < list.length - 1 ? '<span class="node-arrow">→</span>' : '<span class="node-arrow">→ null</span>'}
+					</div>`;
+				}).join('');
+				visual.innerHTML = `<span style="font-weight:bold; color:#2d6624; margin-right:10px;">head →</span>${nodes}`;
+			}
+		}
+
+		function addLog(message) {
+			const log = document.getElementById('listLog');
+			const entry = document.createElement('div');
+			entry.className = 'log-entry';
+			entry.textContent = message;
+			log.insertBefore(entry, log.firstChild);
+		}
+	</script>
+</body>
+</html>
